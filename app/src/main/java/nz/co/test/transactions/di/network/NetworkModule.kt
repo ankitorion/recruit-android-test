@@ -10,4 +10,5 @@ class NetworkModule {
     @Provides
     fun providesTransactionService(retrofit: Retrofit): TransactionsService =
         retrofit.create(TransactionsService::class.java)
+
 }
