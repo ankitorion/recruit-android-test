@@ -6,6 +6,8 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import nz.co.test.transactions.R
+import java.text.ParseException
+import java.text.SimpleDateFormat
 
 class MoreDetailActivity : AppCompatActivity() {
 
@@ -26,7 +28,15 @@ class MoreDetailActivity : AppCompatActivity() {
         val bundle = intent.extras
         if (bundle != null){
             trsummery.text = "${bundle.getString("summery_name")}"
-            trdate.text = "${bundle.getString("transaction_date")}"
+
+            val input = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss")
+            val output = SimpleDateFormat("MM/dd/yyyy hh:mm a")
+            try {
+                val oneWayTripDate = input.parse("${bundle.getString("transaction_date")}") // parse input
+                trdate.text = output.format(oneWayTripDate)
+            } catch (e: ParseException) {
+                e.printStackTrace()
+            }
             val credit_check = "${bundle.getString("credit")}"
             val debit_check = "${bundle.getString("debit")}"
 
